@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表排序</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 遍历数组 -->
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入名字" v-model="keyword">
+        <button>年龄升序</button>
+        <button>年龄降序</button>
+        <button>原顺序</button>
+        <ul v-for="(item,i) in filPersons" :key="item.id">
+            <li>{{item.name}}-{{item.age}}-{{item.sex}}</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el: '#root',
+            data() {
+                return {
+                    keyword: '',
+                    persons: [{
+                        id: '001',
+                        name: '马冬梅',
+                        sex: '女',
+                        age: 18
+                    }, {
+                        id: '002',
+                        name: '周冬雨',
+                        sex: '女',
+                        age: 19
+                    }, {
+                        id: '003',
+                        name: '周杰伦',
+                        sex: '男',
+                        age: 20
+                    }, {
+                        id: '004',
+                        name: '温兆伦',
+                        sex: '男',
+                        age: 20
+                    }]
+                }
+            },
+            computed: {
+                filPersons() {
+                    let filPersons = this.persons.filter((p) => {
+                        //函数体
+                        return p.name.indexOf(this.keyword) !== -1;
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

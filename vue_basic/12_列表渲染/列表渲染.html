@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 遍历数组 -->
+        <h2>人员列表</h2>
+        <ul  v-for="(item,i) in persons" :key="i">
+            <li>{{item.name}}-{{item.age}}</li>
+        </ul>
+
+        <!-- 遍历对象 -->
+        <ul v-for="(value,key) in car" :key="key">
+            <li>{{key}}-{{value}}</li>
+        </ul>
+
+        <!-- 遍历字符串 -->
+        <ul v-for="(value,i) in str" :key="i">
+            <li>{{i}}-{{value}}</li>
+        </ul>
+
+        <!-- 遍历指定次数 -->
+        <!-- <ul v-for="(value,i) in 5" :key="i">
+            <li>{{i}}-{{value}}</li>
+        </ul> -->
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+
+        const vm = new Vue({
+            el : '#root',
+            data() {
+                return {
+                    persons:[{
+                        id : '001',
+                        name : '张三',
+                        age : 18
+                    },{
+                        id : '002',
+                        name : '李四',
+                        age : 19
+                    },{
+                        id : '003',
+                        name : '王五',
+                        age : 20
+                    }],
+                    car:{
+                        name : '宝马',
+                        price : 2000000,
+                        color : '黑色'
+                    },
+                    str:'hello'
+                }
+            },
+        })
+    </script>
+</body>
+</html>

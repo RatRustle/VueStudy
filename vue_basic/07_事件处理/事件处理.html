@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        *{
+            margin-top: 20px;
+        }
+
+        .box{
+            padding: 5px;
+            background-color: aqua;
+        }
+
+        .box1{
+            padding: 5px;
+            background-color: aqua;
+        }
+
+        .box2{
+            padding: 5px;
+            background-color: orange;
+        }
+
+        .list{
+            width: 200px;
+            height: 200px;
+            background-color: aquamarine;
+            overflow: auto;
+        }
+
+        li{
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <h2>学校名称:{{name}}</h2>
+        <button v-on:click="showInfo">点我提示信息1</button>
+        <button @click="showInfo">点我提示信息1(简写)</button>
+        <button @click="showInfo2(66,$event)">点我提示信息2</button>
+        <br/>
+        <!-- 阻止默认事件 -->
+        <a href="http://www.baidu.com" @click.prevent="gotoBaiDu">点我跳转百度</a>
+        <!-- 阻止事件冒泡 -->
+        <div class="box" @click="gotoBaiDu">
+            <button @click.stop="gotoBaiDu">点我跳转百度</button>
+        </div>
+
+        <!-- 事件只触发一次 -->
+        <button @click.once="gotoBaiDu">点我跳转百度</button>
+
+        <!--  使用事件的捕获模式 -->
+        <div class="box1" @click.capture="showMsg(1)">
+            div1
+            <div class="box2" @click="showMsg(2)"> div2</div>
+        </div>
+
+        <!-- 只有event.target 是当前操作的元素时才触发事件 -->
+        <div class="box" @click.self="gotoBaiDu">
+            <button @click="gotoBaiDu">点我跳转百度</button>
+        </div>
+
+        <!-- 事件的默认行为立即执行，无需等待事件回调执行完毕 -->
+        <ul @scroll="demo" class="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
+        <ul @wheel.passive="demo" class="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+
+        <input type="text" placeholder="按下回车提示输入" @keyup.caps-lock="showInfo3">
+
+        <input type="text" placeholder="按下回车提示输入" @keydown.tab="showInfo3">
+    </div>
+
+    <script type="text/javascript">
+        //阻止vue在启动时生成生产提示
+         Vue.config.productionTip = false;
+
+         const vm = new Vue({
+             el : '#root',
+             data(){
+                return {
+                    name : '清华大学'
+                }
+             },
+             methods :{
+                showInfo(e){
+                    console.log(e);
+                    alert('同学你好!');
+                },
+                showInfo2(str,event){
+                    console.log(str,event);
+                },
+                gotoBaiDu(e){
+                    alert('同学你好!');
+                },
+                showMsg(msg){
+                    alert(msg);
+                },
+                demo(){
+                    for(let i = 0; i<10000;i++){
+                        console.log('#');
+                    }
+                    console.log("累坏了");
+                },
+                showInfo3(e){
+                    //console.log(e.key,e.keyCode);
+                    console.log(e.target.value);
+                }
+             }
+         })
+    </script>
+</body>
+</html>

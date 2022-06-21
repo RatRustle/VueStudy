@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>el与data的两种写法</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>Hello {{name}}!</h1>
+    </div>
+
+    <script type="text/javascript">
+        //阻止vue在启动时生成生产提示
+        Vue.config.productionTip = false;
+
+        //创建Vue实例
+        const v = new Vue({
+            //el: '#root',  //el第一种写法
+            //data第一种写法:对象式
+            // data: { 
+            //     name: '鼠瑟瑟123'
+            // }
+
+            //data第二种写法:函数式
+            // data: function () {
+            //     return {
+            //         name: '王五'
+            //     }
+            // }
+
+            //简写
+            data (){
+                return {
+                    name: '王五'
+                }
+            }
+        });
+
+        setTimeout(() => {
+            //el第二种写法
+            v.$mount('#root')
+        }, 1000);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root" >
+       <h1 v-show="true"> v-show欢迎来到{{name}}</h1>
+       <h1 v-if="true"> v-if欢迎来到{{name}}</h1>
+       <h2>当前的n是{{n}}</h2>
+       <button @click="n++">点我n+1</button>
+       <div v-show="n===1">show张三</div>
+       <div v-show="n===2">show李四</div>
+       <div v-show="n===3">show王五</div>
+       <div v-if="n===1">张三</div>
+       <div v-else-if="n===2">李四</div>
+       <div v-else>王五</div>
+
+       <template v-if="n===1">
+        <h1 >你好1</h1>
+        <h1 >你好2</h1>
+        <h1 >你好3</h1>
+       </template>
+       
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        const vm = new Vue({
+            el :'#root',
+            data(){
+                return{
+                    name :'world',
+                    n:0
+                }
+            }
+        })
+    </script>
+</body>
+</html>
