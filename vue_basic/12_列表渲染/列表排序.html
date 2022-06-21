@@ -15,9 +15,9 @@
         <!-- 遍历数组 -->
         <h2>人员列表</h2>
         <input type="text" placeholder="请输入名字" v-model="keyword">
-        <button>年龄升序</button>
-        <button>年龄降序</button>
-        <button>原顺序</button>
+        <button @click="sortType = 2">年龄升序</button>
+        <button @click="sortType = 1">年龄降序</button>
+        <button @click="sortType = 0">原顺序</button>
         <ul v-for="(item,i) in filPersons" :key="item.id">
             <li>{{item.name}}-{{item.age}}-{{item.sex}}</li>
         </ul>
@@ -29,6 +29,7 @@
             el: '#root',
             data() {
                 return {
+                    sortType: 0, //0原顺序 1降序 2升序
                     keyword: '',
                     persons: [{
                         id: '001',
@@ -44,21 +45,29 @@
                         id: '003',
                         name: '周杰伦',
                         sex: '男',
-                        age: 20
+                        age: 22
                     }, {
                         id: '004',
                         name: '温兆伦',
                         sex: '男',
-                        age: 20
+                        age: 21
                     }]
                 }
             },
             computed: {
                 filPersons() {
-                    let filPersons = this.persons.filter((p) => {
+                    const arr = this.persons.filter((p) => {
                         //函数体
                         return p.name.indexOf(this.keyword) !== -1;
                     })
+                    //判断是否须需要排序
+                    if(this.sortType){
+                        arr.sort((a,b) =>{
+                            //函数体
+                            return this.sortType ===1 ? b.age-a.age : a.age-b.age;
+                        })
+                    }
+                    return arr;
                 }
             }
         })
