@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过滤器</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/dayjs.min.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>显示格式化后的时间</h2>
+        <!-- 计算属性实现 -->
+        <h3>现在是{{fmtTime}}</h3>
+        <!-- methods实现 -->
+        <h3>现在是{{getFmtTime()}}</h3>
+        <!-- 过滤器实现 -->
+        <h3>现在是{{time | timeFormater}}</h3>
+
+        <h3>现在是{{time | timeFormater('YYYY-MM-DD')}}</h3>
+        <!-- 过滤器实现传参 -->
+        <h3>现在是{{time | timeFormater('YYYY-MM-DD') | mySlice}}</h3>
+        <h3 :x="msg | mySlice">世界</h3>
+    </div>
+
+    <div id="root2">
+        <h2>{{msg | mySlice}}</h2>
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        //全局的过滤器
+        Vue.filter('mySlice',function(val){
+            return val.slice(0,4)
+        })
+
+        const vm = new Vue({
+            el : '#root',
+            data() {
+                return {
+                    time : 15165161315616,
+                    msg : '你好,世界'
+                }
+            },
+            computed:{
+                fmtTime(){
+                    return dayjs().format('YYYY-MM-DD HH:mm:ss')
+                }
+            },
+            methods: {
+                getFmtTime(){
+                    return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss') 
+                }
+            },
+            //局部的过滤器
+            filters:{
+                timeFormater(val,str='YYYY-MM-DD HH:mm:ss'){
+                    return dayjs(val).format(str) 
+                },
+                // mySlice(val){
+                //     return val.slice(0,4)
+                // }
+            }
+        })
+
+        new Vue({
+            el : '#root2',
+            data() {
+                return {
+                    msg : 'hello world!'
+                }
+            },
+        })
+    </script>
+
+</body>
+
+</html>
