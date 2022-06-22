@@ -5,24 +5,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue.set的使用</title>
+    <title>总结Vue的数据检测</title>
     <!-- 引入Vue -->
     <script type="text/javascript" src="../js/vue.js"></script>
 </head>
 
 <body>
     <div id="root">
+        <button @click="addAge">年龄+1岁</button><br />
+        <button @click="addSex">添加一个性别：男</button><br />
+        <button @click="addFriend">在列表首位添加一个朋友</button><br />
+        <button @click="updateFriend">修改第一个朋友的名字：张琳</button><br />
+        <button @click="addHobby">添加一个爱好</button><br />
+        <button @click="updateHobby">修改第一个爱好</button><br />
         <h2>学校名称:{{name}}</h2>
         <h2>学校地址:{{address}}</h2>
-        <button @click="addAge">年龄+1岁</button>
-        <button @click="addSex">添加一个性别：男</button>
         <h2>学生姓名:{{student.name}}</h2>
         <h2 v-if="student.sex">学生性别:{{student.sex}}</h2>
         <h2>学生年龄:{{student.age.rAge}},{{student.age.sAge}}</h2>
         <h2>朋友们</h2>
         <ul>
-            <li v-for="(item,i) in student.friends" :key="i"> 
+            <li v-for="(item,i) in student.friends" :key="i">
                 {{item.name}}---{{item.age}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for="(item,i) in student.hobby" :key="i">
+                {{item}}
             </li>
         </ul>
     </div>
@@ -50,16 +59,39 @@
                                 name: '李四',
                                 age: 30
                             }
-                        ]
+                        ],
+                        hobby: ['抽烟', '喝酒', '烫头']
                     }
                 }
             },
             methods: {
-                addSex(){
+                addAge() {
+                    this.student.age.rAge++;
+                    this.student.age.sAge++;
+                },
+                addSex() {
                     //1
                     //Vue.set(this.student,'sex','男');
                     //2
-                    this.$set(this.student,'sex','男');
+                    this.$set(this.student, 'sex', '男');
+                },
+                addFriend() {
+                    this.student.friends.unshift({ name: 'jack', age: 70 })
+                },
+                updateFriend(){
+                    this.student.friends[0].name = '张琳';
+                    this.student.friends[0].age = 18;
+                },
+                addHobby(){
+                    this.student.hobby.push('学习');
+                },
+                updateHobby(){
+                    //1
+                    //this.student.hobby.splice(0,1,'开车');
+                    //2
+                    //Vue.set(this.student.hobby,0,'开车');
+                    //3
+                    this.$set(this.student.hobby,0,'开车');
                 }
             },
         })
