@@ -36,7 +36,9 @@ export default {
     //勾选or取消勾选一个todo
     checkTodo(id) {
       this.todos.forEach((todo) => {
-        if (todo.id === id) todo.done = !todo.done
+        if (todo.id === id) {
+          todo.done = !todo.done
+        }
       })
     },
     //删除一个todo
