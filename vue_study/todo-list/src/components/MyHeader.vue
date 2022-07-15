@@ -8,7 +8,7 @@
 import { nanoid } from 'nanoid'
 export default {
     name: 'MyHeader',
-    props: ['addTodo'],	// 接收从App传递过来的addTodo
+    //props: ['addTodo'],	// 接收从App传递过来的addTodo
     data() {
         return {
             title: ''// 收集用户输入的title
@@ -30,6 +30,9 @@ export default {
             this.addTodo(todoObj)
             // 清空输入
             this.title = ''
+        },
+        addTodo(value){
+            this.$emit('addTodo',value)
         }
     },
 }

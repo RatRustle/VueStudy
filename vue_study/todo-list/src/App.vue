@@ -2,9 +2,9 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader :addTodo="addTodo" />
-        <MyList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo" />
-        <MyFooter :todos="todos" :checkAllTodo="checkAllTodo" :clearAllTodo="clearAllTodo" />
+        <MyHeader @addTodo="addTodo" />
+        <MyList :todos="todos"/>
+        <MyFooter :todos="todos" @checkAllTodo="checkAllTodo" @clearAllTodo="clearAllTodo" />
       </div>
     </div>
   </div>
@@ -37,6 +37,14 @@ export default {
         }
       })
     },
+    //修改一个todo
+    updateTodo(id,title){
+      this.todos.forEach((todo) => {
+        if (todo.id === id) {
+          todo.title = title
+        }
+      })
+    },
     //删除一个todo
     deleteTodo(id) {
       this.todos = this.todos.filter(todo => todo.id !== id)
@@ -61,7 +69,17 @@ export default {
         localStorage.setItem('todos', JSON.stringify(value))
       }
     }
-  }
+  },
+  mounted(){
+        this.$bus.$on('checkTodo',this.checkTodo)
+        this.$bus.$on('deleteTodo',this.deleteTodo)
+        this.$bus.$on('updateTodo',this.updateTodo)
+    },
+    beforeDestroy(){
+        this.$bus.$off('checkTodo')
+        this.$bus.$off('deleteTodo')
+        this.$bus.$off('updateTodo')
+    }
 }
 </script>
 
@@ -94,6 +112,14 @@ body {
   color: #fff;
   background-color: #bd362f;
 }
+
+.btn-edit {
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid #2941c4;
+  margin-right: 5px;
+}
+
 
 .btn:focus {
   outline: none;

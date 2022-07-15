@@ -14,7 +14,7 @@
 <script>
 export default {
     name: 'MyFooter',
-    props: ['todos', 'checkAllTodo', 'clearAllTodo'],
+    props: ['todos'],
     computed: {
         // 总数
         total() {
@@ -44,6 +44,12 @@ export default {
         //清空所有已完成
         clearAll() {
             this.clearAllTodo()
+        },
+        checkAllTodo(value){
+            this.$emit('checkAllTodo',value)
+        },
+        clearAllTodo(){
+            this.$emit('clearAllTodo')
         }
     },
 }
