@@ -14,6 +14,9 @@
         <hr>
         <h1 style="color:red">04_scoped样式</h1>
         <MySchool></MySchool>
+        <hr>
+        <h1 style="color:red">05_解除自定义事件</h1>
+        <MyStudent :name="'李四'" :sex="'男'" @sendInfo="sendInfo"></MyStudent>
     </div>
 </template>
 
@@ -37,6 +40,9 @@ export default {
         showDom(){
            console.log(this.$refs.title); 
            console.log(this.$refs.school);
+        },
+        sendInfo(e,...params){
+            console.log(e,params)
         }
     },
 };

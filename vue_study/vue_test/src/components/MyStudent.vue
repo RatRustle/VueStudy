@@ -5,6 +5,8 @@
     <h2 @click="showName">学生名称：{{ name }}</h2>
     <h2>学生性别:{{ sex }}</h2>
     <h2>学生年龄：{{ age }}</h2>
+    <button @click="bind">自定义事件</button>
+    <button @click="unbind">点我解除自定义事件</button>
   </div>
 </template>
 
@@ -30,6 +32,19 @@ export default {
     age : {
       type : Number,
       default : 0
+    }
+  },
+  methods:{
+    bind(){
+      this.$emit('sendInfo',this.name,555)
+    },
+    unbind(){
+      //解绑一个自定义事件
+      this.$off('sendInfo')
+      //解绑多个自定义事件
+      //this.$off(['sendInfo',''])
+      //解绑所有
+      //this.$off()
     }
   },
   mixins:[mixin]
