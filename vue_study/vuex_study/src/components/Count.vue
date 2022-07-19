@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h1>当前求和为{{ sum }}</h1>
+        <h1>当前求和为:{{ sum }}</h1>
+        <h3>当前求和放大10倍为:{{ bigSum }}</h3>
+        <h3>我在{{ school }},学习{{ subject }}</h3>
+        <h3>人员列表的总人数是:{{personList.length}}</h3>
         <select v-model="n">
             <option :value="1">1</option>
             <option :value="2">2</option>
@@ -14,31 +17,35 @@
 </template>
 
 <script>
+import { mapState,mapGetters,mapMutations,mapActions } from 'vuex'
+
 export default {
     name: 'Count',
     data() {
         return {
-            n: 1,
-            sum: 0
+            n: 1
         }
     },
     methods: {
+        ...mapMutations('Count',['JIA','JIAN']),
+        ...mapActions('Count',['jiaOdd','jiaWait']),
         increment() {
-            this.sum += this.n
+            this.JIA(this.n)
         },
         decrement() {
-            this.sum -= this.n
+            this.JIAN(this.n)
         },
         incrementOdd() {
-            if (this.sum % 2) {
-                this.sum += this.n
-            }
+            this.jiaOdd(this.n)
         },
         incrementWait() {
-            setTimeout(() => {
-                this.sum += this.n
-            }, 500)
+            this.jiaWait(this.n)
         }
+    },
+    computed : {
+        ...mapState('Count',['sum','school','subject']),
+        ...mapState('Person',['personList']),
+        ...mapGetters('Count',['bigSum'])
     }
 }
 </script>
